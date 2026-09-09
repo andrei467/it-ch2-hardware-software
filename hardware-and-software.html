@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hardware &amp; Software | Cambridge IT Study Page</title>
+<style>
+  :root{
+    --indigo:#4f46e5;
+    --indigo-dark:#3730a3;
+    --teal:#0d9488;
+    --teal-dark:#0f766e;
+    --orange:#f97316;
+    --orange-dark:#c2410c;
+    --bg:#f6f6f4;
+    --card:#ffffff;
+    --text:#1f2937;
+    --muted:#6b7280;
+    --border:#e5e7eb;
+    --green:#15803d;
+    --green-bg:#ecfdf5;
+    --red:#b91c1c;
+    --red-bg:#fef2f2;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.55;
+  }
+  a{color:var(--indigo);}
+
+  /* ---- Top bar ---- */
+  header.topbar{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:var(--indigo);
+    color:#fff;
+    padding:14px 20px;
+    box-shadow:0 2px 6px rgba(0,0,0,.15);
+  }
+  .topbar-inner{
+    max-width:1000px;
+    margin:0 auto;
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+  }
+  .brand{
+    font-size:1.05rem;
+    font-weight:bold;
+  }
+  .brand small{
+    display:block;
+    font-weight:normal;
+    font-size:.75rem;
+    opacity:.85;
+  }
+  nav.pagenav{
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+  }
+  nav.pagenav a{
+    color:#fff;
+    text-decoration:none;
+    font-size:.82rem;
+    background:rgba(255,255,255,.15);
+    padding:6px 10px;
+    border-radius:5px;
+  }
+  nav.pagenav a:hover{background:rgba(255,255,255,.28);}
+  .score-pill{
+    background:var(--orange);
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:.85rem;
+    font-weight:bold;
+    white-space:nowrap;
+  }
+  .progress-track{
+    max-width:1000px;
+    margin:10px auto 0;
+    height:8px;
+    background:rgba(255,255,255,.25);
+    border-radius:4px;
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;
+    width:0%;
+    background:var(--orange);
+    transition:width .4s ease;
+  }
+
+  /* ---- Layout ---- */
+  main{
+    max-width:900px;
+    margin:0 auto;
+    padding:24px 18px 80px;
+  }
+  .intro-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-left:6px solid var(--indigo);
+    border-radius:8px;
+    padding:20px 22px;
+    margin-bottom:30px;
+  }
+  .intro-card h1{
+    margin-top:0;
+    color:var(--indigo-dark);
+    font-size:1.5rem;
+  }
+  ul.check-before{
+    padding-left:20px;
+    margin:10px 0 0;
+  }
+  ul.check-before li{margin-bottom:6px;}
+
+  section.topic{
+    margin-bottom:56px;
+    scroll-margin-top:110px;
+  }
+  section.topic > h2{
+    color:#fff;
+    background:var(--teal);
+    padding:12px 18px;
+    border-radius:8px 8px 0 0;
+    margin:0;
+    font-size:1.3rem;
+  }
+  .topic-body{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-top:none;
+    border-radius:0 0 8px 8px;
+    padding:22px;
+  }
+  h3{
+    color:var(--teal-dark);
+    border-bottom:2px solid var(--border);
+    padding-bottom:6px;
+    margin-top:34px;
+  }
+  h3:first-child{margin-top:0;}
+  h4{color:var(--indigo-dark); margin-bottom:6px;}
+
+  .keyword-box{
+    background:#fff7ed;
+    border:1px solid #fed7aa;
+    border-left:5px solid var(--orange);
+    border-radius:6px;
+    padding:12px 16px;
+    margin:16px 0;
+  }
+  .keyword-box .kw-title{
+    text-transform:uppercase;
+    font-size:.72rem;
+    letter-spacing:.04em;
+    color:var(--orange-dark);
+    font-weight:bold;
+    margin-bottom:4px;
+  }
+  .keyword-box strong{color:var(--orange-dark);}
+
+  table.info-table{
+    width:100%;
+    border-collapse:collapse;
+    margin:16px 0;
+    font-size:.92rem;
+  }
+  table.info-table th, table.info-table td{
+    border:1px solid var(--border);
+    padding:9px 12px;
+    text-align:left;
+    vertical-align:top;
+  }
+  table.info-table th{
+    background:var(--indigo);
+    color:#fff;
+  }
+  table.info-table tr:nth-child(even) td{background:#f9fafb;}
+
+  /* diagram blocks */
+  .diagram{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:10px;
+    margin:20px 0;
+    padding:18px;
+    background:#f8fafc;
+    border:1px dashed #cbd5e1;
+    border-radius:8px;
+  }
+  .diagram.vertical{flex-direction:column;}
+  .dbox{
+    padding:10px 16px;
+    border-radius:6px;
+    font-size:.88rem;
+    font-weight:bold;
+    text-align:center;
+    color:#fff;
+    min-width:140px;
+  }
+  .dbox.app{background:var(--teal);}
+  .dbox.os{background:var(--indigo);}
+  .dbox.driver{background:var(--orange-dark);}
+  .dbox.hw{background:#334155;}
+  .dbox.file{background:#0369a1;}
+  .dbox.proc{background:var(--indigo-dark);}
+  .darrow{
+    font-size:1.4rem;
+    color:#64748b;
+  }
+  .darrow.updown{writing-mode:vertical-lr;}
+  .diagram-caption{
+    text-align:center;
+    font-size:.82rem;
+    color:var(--muted);
+    margin-top:-10px;
+    margin-bottom:22px;
+    font-style:italic;
+  }
+
+  /* interactive question card */
+  .qcard{
+    background:#fafaf9;
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:18px 20px;
+    margin:22px 0;
+  }
+  .qcard .qlabel{
+    display:inline-block;
+    background:var(--indigo);
+    color:#fff;
+    font-size:.72rem;
+    font-weight:bold;
+    padding:3px 9px;
+    border-radius:4px;
+    margin-bottom:8px;
+  }
+  .qcard p.qtext{font-weight:bold; margin:6px 0 10px;}
+  .qcard textarea{
+    width:100%;
+    min-height:80px;
+    padding:10px;
+    font-family:Arial, sans-serif;
+    font-size:.92rem;
+    border:1px solid #cbd5e1;
+    border-radius:6px;
+    resize:vertical;
+  }
+  .qcard textarea:focus{outline:2px solid var(--indigo); border-color:var(--indigo);}
+  .qbtn-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-top:10px;
+    flex-wrap:wrap;
+  }
+  button.check-btn{
+    background:var(--indigo);
+    color:#fff;
+    border:none;
+    padding:9px 16px;
+    border-radius:6px;
+    font-size:.88rem;
+    font-weight:bold;
+    cursor:pointer;
+  }
+  button.check-btn:hover{background:var(--indigo-dark);}
+  .error-msg{
+    display:none;
+    align-items:center;
+    gap:8px;
+    background:var(--red-bg);
+    color:var(--red);
+    border:1px solid #fecaca;
+    padding:9px 12px;
+    border-radius:6px;
+    font-size:.86rem;
+    margin-top:10px;
+  }
+  .reveal{
+    display:none;
+    margin-top:14px;
+    background:var(--green-bg);
+    border:1px solid #a7f3d0;
+    border-left:5px solid var(--green);
+    border-radius:6px;
+    padding:12px 16px;
+  }
+  .reveal .rev-title{
+    font-size:.72rem;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    font-weight:bold;
+    color:var(--green);
+    margin-bottom:5px;
+  }
+  .self-award{
+    margin-top:12px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:.88rem;
+    color:var(--muted);
+  }
+  .self-award input{width:17px; height:17px;}
+  .self-award label{cursor:pointer;}
+
+  /* MCQ */
+  .mcq{
+    background:#fafaf9;
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:18px 20px;
+    margin:22px 0;
+  }
+  .mcq .qlabel{
+    display:inline-block;
+    background:var(--orange);
+    color:#fff;
+    font-size:.72rem;
+    font-weight:bold;
+    padding:3px 9px;
+    border-radius:4px;
+    margin-bottom:8px;
+  }
+  .mcq p.qtext{font-weight:bold; margin:6px 0 12px;}
+  .option{
+    display:block;
+    width:100%;
+    text-align:left;
+    background:#fff;
+    border:1px solid #cbd5e1;
+    border-radius:6px;
+    padding:10px 14px;
+    margin-bottom:8px;
+    font-size:.9rem;
+    font-family:Arial, sans-serif;
+    cursor:pointer;
+    color:var(--text);
+  }
+  .option:hover{border-color:var(--indigo);}
+  .option.correct{
+    background:var(--green-bg);
+    border-color:var(--green);
+    color:var(--green);
+    font-weight:bold;
+  }
+  .option.incorrect{
+    background:var(--red-bg);
+    border-color:var(--red);
+    color:var(--red);
+    font-weight:bold;
+  }
+  .mcq-feedback{
+    margin-top:8px;
+    font-size:.85rem;
+    font-weight:bold;
+    display:none;
+  }
+
+  .reflect-box{
+    background:#eef2ff;
+    border:1px solid #c7d2fe;
+    border-radius:8px;
+    padding:14px 18px;
+    margin:20px 0;
+    font-size:.9rem;
+  }
+  .reflect-box textarea{
+    width:100%;
+    min-height:50px;
+    margin-top:8px;
+    padding:8px;
+    border:1px solid #c7d2fe;
+    border-radius:6px;
+    font-family:Arial, sans-serif;
+  }
+
+  .summary-list{
+    list-style:none;
+    padding:0;
+  }
+  .summary-list li{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    background:#fafaf9;
+    border:1px solid var(--border);
+    border-radius:6px;
+    padding:10px 14px;
+    margin-bottom:8px;
+    font-size:.92rem;
+  }
+  .summary-list input{margin-top:3px; width:16px; height:16px;}
+
+  .final-score-box{
+    text-align:center;
+    background:var(--indigo);
+    color:#fff;
+    border-radius:10px;
+    padding:28px;
+    margin-top:20px;
+  }
+  .final-score-box .big{
+    font-size:2.4rem;
+    font-weight:bold;
+    color:var(--orange);
+  }
+
+  footer{
+    text-align:center;
+    color:var(--muted);
+    font-size:.82rem;
+    padding:20px;
+  }
+
+  @media (max-width:600px){
+    .dbox{min-width:110px; font-size:.78rem;}
+    .diagram{padding:12px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">Hardware &amp; Software
+      <small>Cambridge IT AS & A Level &mdash; Mainframes, System Software &amp; Utility Software</small>
+    </div>
+    <nav class="pagenav">
+      <a href="#mainframes">1. Mainframes</a>
+      <a href="#system-software">2. System Software</a>
+      <a href="#utility-software">3. Utility Software</a>
+      <a href="#summary">Summary</a>
+    </nav>
+    <div class="score-pill">Score: <span id="scoreDisplay">0</span> / <span id="scoreMax">57</span></div>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+</header>
+
+<main>
+
+  <div class="intro-card">
+    <h1>Before you start</h1>
+    <p>Work through each part in order. Read the explanations, study the diagrams, then try the questions yourself <strong>before</strong> checking the model answer &mdash; that's how the ideas actually stick. Tick the box only if your own answer genuinely covered the same points; you're only cheating yourself if you tick it without trying first.</p>
+    <ul class="check-before">
+      <li>Do you understand the difference between hardware and software?</li>
+      <li>Can you explain what makes a mainframe different from a normal desktop computer?</li>
+      <li>Do you know what an operating system actually does, moment to moment?</li>
+      <li>Can you tell the difference between a compiler and an interpreter?</li>
+    </ul>
+  </div>
+
+  <!-- ============ SECTION 1: MAINFRAMES & SUPERCOMPUTERS ============ -->
+  <section class="topic" id="mainframes">
+    <h2>1. Mainframe Computers &amp; Supercomputers</h2>
+    <div class="topic-body">
+
+      <h3>What counts as "hardware" and "software"?</h3>
+      <p><strong>Hardware</strong> is the physical, touchable parts of a computer system &mdash; the CPU, motherboard, RAM, ROM, graphics card, sound card, monitor, keyboard, mouse, printer, and so on. <strong>Software</strong> is the instructions that tell the hardware what to do: applications like word processors and spreadsheets, and the <strong>operating system</strong> that manages the hardware underneath everything else. Every program, whatever it looks like on screen, ultimately exists as binary instructions &mdash; long strings of 1s and 0s that the processor can carry out.</p>
+
+      <div class="keyword-box">
+        <div class="kw-title">Key words</div>
+        <p><strong>Device</strong>: a physical hardware component of a computer system.<br>
+        <strong>Software</strong>: programs that give instructions to the computer.<br>
+        <strong>Operating system</strong>: software that manages the hardware within a computer system.</p>
+      </div>
+
+      <h3>Uses of mainframe computers</h3>
+      <p>A <strong>mainframe computer</strong> can support thousands of connected terminals at once, which is why organisations like banks and large businesses rely on them. A terminal doesn't need much processing power of its own &mdash; even a cash machine (ATM) counts as one &mdash; because the real work happens back on the mainframe. This makes mainframes well suited to hosting business databases that huge numbers of customers and staff need to access simultaneously, and to running large-scale transaction and batch processing jobs, such as the statistical analysis behind a national census.</p>
+
+      <div class="keyword-box">
+        <div class="kw-title">Key word</div>
+        <p><strong>Mainframe computer</strong>: a powerful computer that serves several terminals at once.</p>
+      </div>
+
+      <h3>Uses of supercomputers</h3>
+      <p>A <strong>supercomputer</strong> is built for a completely different job. Instead of serving thousands of ordinary users, it's designed to run very few programs but push through enormous numbers of complex calculations as fast as physically possible, with (almost) all of its power aimed at one task at a time. This makes supercomputers essential for quantum mechanics research, where the behaviour of millions of atoms must be simulated, and for weather and climate forecasting, where detailed numerical models of the atmosphere, oceans, and land need to be calculated.</p>
+
+      <div class="keyword-box">
+        <div class="kw-title">Key word</div>
+        <p><strong>Supercomputer</strong>: a large computer that uses parallel processing to complete highly complex tasks quickly.</p>
+      </div>
+
+      <h3>RAS: Reliability, Availability, Serviceability</h3>
+      <p>Because so much depends on them, mainframes and supercomputers are designed around three qualities known together as <strong>RAS</strong>:</p>
+      <table class="info-table">
+        <tr><th>Quality</th><th>What it means in practice</th></tr>
+        <tr><td><strong>Reliability</strong></td><td>The system is built so that it can be trusted to process data correctly and rarely fails. Hardware is extensively tested, and software is checked and updated quickly if problems are found.</td></tr>
+        <tr><td><strong>Availability</strong></td><td>The system is designed to be running and reachable essentially 100% of the time. Redundant hardware (extra power supplies, extra components) automatically takes over if something fails.</td></tr>
+        <tr><td><strong>Serviceability</strong></td><td>Faulty parts can be maintained or swapped out, sometimes while the system keeps running &mdash; this is called <strong>hot-swappable</strong> &mdash; so a repair doesn't force a full shutdown.</td></tr>
+      </table>
+
+      <h3>Advantages and disadvantages of mainframes</h3>
+      <table class="info-table">
+        <tr><th>Advantages</th><th>Disadvantages</th></tr>
+        <tr><td>Reliable, available and serviceable (RAS) &mdash; far more dependable than ordinary computers</td><td>Very high cost, which usually only large organisations (banks, governments, corporations) can justify</td></tr>
+        <tr><td>Scalable &mdash; more processors or memory can be added as demand grows</td><td>Specialist operating systems and specialist support staff are required, and they're expensive</td></tr>
+        <tr><td>Built to last more than a decade</td><td>Interfaces are often command-driven, which can be difficult to learn</td></tr>
+        <tr><td>Can store and process enormous amounts of data</td><td>Cooling and maintenance demands are significant</td></tr>
+        <tr><td>Hardware faults are flagged immediately so repairs happen fast</td><td>&nbsp;</td></tr>
+      </table>
+
+      <h3>Measuring performance: MIPS vs MFLOPS</h3>
+      <p>Mainframe performance has traditionally been measured in <strong>MIPS</strong> (millions of instructions per second). The problem is that MIPS isn't a very fair comparison: a CISC processor's single instruction might do far more work than a RISC processor's single instruction, so counting raw instructions can be misleading. Workload, cache size, and how much input/output activity is happening all affect the figure too.</p>
+      <p>For supercomputers specifically, performance is usually measured in <strong>FLOPS</strong> (floating point operations per second) or <strong>MFLOPS</strong> (millions of FLOPS), because scientific and mathematical calculations rely heavily on floating-point arithmetic, and different processors can need a different number of floating-point instructions to do the same calculation &mdash; so measuring the actual operations gives a fairer picture of real computing power than counting raw instructions.</p>
+
+      <div class="keyword-box">
+        <div class="kw-title">Key word</div>
+        <p><strong>FLOPS</strong>: floating point operations per second &mdash; used to measure the performance of supercomputers.</p>
+      </div>
+
+      <h3>Why cold climates suit data centres</h3>
+      <p>All that processing generates a lot of heat, so mainframes and supercomputers need serious cooling &mdash; either air cooling (which uses a lot of power to chill large volumes of air) or liquid cooling (which delivers cold liquid straight to the processor and is more efficient). This is exactly why many data centres are now built in naturally cold parts of the world: the surrounding cold air or water can do much of the cooling job for free.</p>
+
+      <h3>Try it yourself</h3>
+      <p>Answer each question in your own words first. Only click <strong>Check answer</strong> once you've actually written something &mdash; the button will tell you off if you try to skip ahead!</p>
+
+      <!-- Q1 -->
+      <div class="qcard">
+        <span class="qlabel">Question 1</span>
+        <p class="qtext">State two purposes (uses) of mainframe computers.</p>
+        <textarea id="ans_q1" placeholder="Type your answer here..."></textarea>
+        <div class="qbtn-row"><button class="check-btn" onclick="checkAnswer('q1')">Check answer</button></div>
+        <div class="error-msg" id="err_q1">&#9888; Have a go first! Write your own answer in the box above before you check &mdash; copying the model answer straight away won't help you remember it in the exam.</div>
+        <div class="reveal" id="rev_q1">
+          <div class="rev-title">Model answer</div>
+          <p>Any two of: processing very large numbers of transactions for organisations such as banks; running business databases accessed by many users at once; supporting cash machines (ATMs); batch processing large volumes of data such as a census.</p>
+          <div class="self-award">
+            <input type="checkbox" id="tick_q1" onchange="toggleTick('q1', 3)">
+            <label for="tick_q1">My answer covered the key points &mdash; award myself 3 points</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="qcard">
+        <span class="qlabel">Question 2</span>
+        <p class="qtext">Give two examples of uses of a supercomputer.</p>
+        <textarea id="ans_q2" placeholder="Type your answer here..."></textarea>
+        <div class="qbtn-row"><button class="check-btn" onclick="checkAnswer('q2')">Check answer</button></div>
+        <div class="error-msg" id="err_q2">&#9888; Try answering first! There's nothing to check until you've written a genuine attempt.</div>
+        <div class="reveal" id="rev_q2">
+          <div class="rev-title">Model answer</div>
+          <p>Any two of: modelling weather and climate; simulating quantum mechanics / atomic-scale physics; scientific research requiring huge numbers of complex calculations run at maximum capacity.</p>
+          <div class="self-award">
+            <input type="checkbox" id="tick_q2" onchange="toggleTick('q2', 3)">
+            <label for="tick_q2">My answer covered the key points &mdash; award myself 3 points</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="qcard">
+        <span class="qlabel">Question 3</span>
+        <p class="qtext">State what is meant by RAS in relation to mainframe computers and supercomputers.</p>
+        <textarea id="ans_q3" placeholder="Type your answer here..."></textarea>
+        <div class="qbtn-row"><button class="check-btn" onclick="checkAnswer('q3')">Check answer</button></div>
+        <div class="error-msg" id="err_q3">&#9888; No peeking! Write down what you think RAS stands for and means, then check.</div>
+        <div class="reveal" id="rev_q3">
+          <div class="rev-title">Model answer</div>
+          <p>RAS = Reliability, Availability, Serviceability. Reliability &mdash; the system can be trusted to process data correctly and rarely fails. Availability &mdash; it's designed to be accessible essentially 100% of the time, often using redundant hardware. Serviceability &mdash; faulty parts can be replaced or maintained, sometimes without shutting the system down (hot-swappable).</p>
+          <div class="self-award">
+            <input type="checkbox" id="tick_q3" onchange="toggleTick('q3', 3)">
+            <label for="tick_q3">My answer covered the key points &mdash; award myself 3 points</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="qcard">
+        <span class="qlabel">Question 4</span>
+        <p class="qtext">Explain why colder parts of the world are a favoured location for many data centres.</p>
+        <textarea id="ans_q4" placeholder="Type your answer here..."></textarea>
+        <div class="qbtn-row"><button class="check-btn" onclick="checkAnswer('q4')">Check answer</button></div>
+        <div class="error-msg" id="err_q4">&#9888; Give it a real attempt before checking &mdash; think about what mainframes generate a lot of.</div>
+        <div class="reveal" id="rev_q4">
+          <div class="rev-title">Model answer</div>
+          <p>Mainframes and supercomputers generate a large amount of heat and need constant cooling. In colder climates the naturally cold outside air or water can be used to help cool the equipment (air cooling or liquid cooling), which reduces the energy and cost that would otherwise be needed to run artificial cooling systems.</p>
+          <div class="self-award">
+            <input type="checkbox" id="tick_q4" onchange="toggleTick('q4', 3)">
+            <label for="tick_q4">My answer covered the key points &mdash; award myself 3 points</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="qcard">
+        <span class="qlabel">Question 5</span>
+        <p class="qtext">Explain why MFLOPS is used instead of MIPS as a performance measure for supercomputers.</p>
+        <textarea id="ans_q5" placeholder="Type your answer here..."></textarea>
+        <div class="qbtn-row"><button class="check-btn" onclick="checkAnswer('q5')">Check answer</button></div>
+        <div class="error-msg" id="err_q5">&#9888; Write your own explanation first &mdash; then compare it to the model answer.</div>
+        <div class="reveal" id="rev_q5">
+          <div class="rev-title">Model answer</div>
+          <p>MIPS isn't very reliable for comparison because different processors (e.g. CISC vs RISC) need different numbers of instructions to do the same job, and workload, cache size and input/output activity all affect the figure too. MFLOPS measures floating-point operations, which is what scientific and mathematical calculations mostly rely on, so it gives a fairer, more consistent comparison of the kind of processing a supercomputer actually does.</p>
+          <div class="self-award">
+            <input type="checkbox" id="tick_q5" onchange="toggleTick('q5', 3)">
+            <label for="tick_q5">My answer covered the key points &mdash; award myself 3 points</label>
+          </div>
+        </div>
+      </div>
+
+      <h3>Quick check: multiple choice</h3>
+
+      <div class="mcq" id="mcq_m1" data-answered="0">
+        <span class="qlabel">MCQ 1</span>
+        <p class="qtext">Which term describes a powerful computer that serves many terminals in an organisation, hosting a database accessed by thousands of users at once?</p>
+        <button class="option" data-correct="false" onclick="answerMCQ('m1', this, false, 2)">Supercomputer</button>
+        <button class="option" data-correct="true" onclick="answerMCQ('m1', this, true, 2)">Mainframe computer</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m1', this, false, 2)">Microcontroller</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m1', this, false, 2)">Dumb terminal</button>
+        <div class="mcq-feedback" id="fb_m1"></div>
+      </div>
+
+      <div class="mcq" id="mcq_m2" data-answered="0">
+        <span class="qlabel">MCQ 2</span>
+        <p class="qtext">What is the main design priority of a supercomputer?</p>
+        <button class="option" data-correct="false" onclick="answerMCQ('m2', this, false, 2)">Serving as many simultaneous users as possible</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m2', this, false, 2)">Running as many different programs as possible at once</button>
+        <button class="option" data-correct="true" onclick="answerMCQ('m2', this, true, 2)">Completing a small number of highly complex calculations as fast as possible</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m2', this, false, 2)">Minimising hardware cost</button>
+        <div class="mcq-feedback" id="fb_m2"></div>
+      </div>
+
+      <div class="mcq" id="mcq_m3" data-answered="0">
+        <span class="qlabel">MCQ 3</span>
+        <p class="qtext">In RAS, what does the "S" stand for?</p>
+        <button class="option" data-correct="false" onclick="answerMCQ('m3', this, false, 2)">Speed</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m3', this, false, 2)">Security</button>
+        <button class="option" data-correct="true" onclick="answerMCQ('m3', this, true, 2)">Serviceability</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m3', this, false, 2)">Storage</button>
+        <div class="mcq-feedback" id="fb_m3"></div>
+      </div>
+
+      <div class="mcq" id="mcq_m4" data-answered="0">
+        <span class="qlabel">MCQ 4</span>
+        <p class="qtext">Which measurement is generally preferred over MIPS for comparing supercomputer performance?</p>
+        <button class="option" data-correct="true" onclick="answerMCQ('m4', this, true, 2)">FLOPS / MFLOPS</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m4', this, false, 2)">GHz</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m4', this, false, 2)">RPM</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m4', this, false, 2)">Bandwidth</button>
+        <div class="mcq-feedback" id="fb_m4"></div>
+      </div>
+
+      <div class="mcq" id="mcq_m5" data-answered="0">
+        <span class="qlabel">MCQ 5</span>
+        <p class="qtext">Why might a data centre use liquid cooling rather than air cooling?</p>
+        <button class="option" data-correct="false" onclick="answerMCQ('m5', this, false, 2)">It is always cheaper to install</button>
+        <button class="option" data-correct="true" onclick="answerMCQ('m5', this, true, 2)">It delivers cold liquid directly to the processor chip, removing heat more efficiently</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m5', this, false, 2)">It removes the need for any cooling system at all</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m5', this, false, 2)">It increases the processor's clock speed</button>
+        <div class="mcq-feedback" id="fb_m5"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ SECTION 2: SYSTEM SOFTWARE ============ -->
+  <section class="topic" id="system-software">
+    <h2>2. System Software</h2>
+    <div class="topic-body">
+
+      <h3>Operating systems</h3>
+      <p><strong>System software</strong> is software designed to maintain or operate the computer system itself, and the most important example is the <strong>operating system</strong>. It sits between the hardware and any applications, and manages all the communication between the two.</p>
+
+      <div class="diagram vertical">
+        <div class="dbox app">Application</div>
+        <div class="darrow">&#8597;</div>
+        <div class="dbox os">Operating system</div>
+        <div class="darrow">&#8597;</div>
+        <div class="dbox hw">Hardware</div>
+      </div>
+      <p class="diagram-caption">The operating system manages communication between applications and hardware.</p>
+
+      <p>Typical jobs an operating system carries out include:</p>
+      <ul>
+        <li>allocating memory to software</li>
+        <li>sending data and instructions to output devices</li>
+        <li>responding to input devices, such as when a key is pressed</li>
+        <li>opening and closing files on storage devices</li>
+        <li>giving each running task a fair share of processor time</li>
+        <li>sending error messages or status messages to applications or users</li>
+        <li>dealing with user logons and security</li>
+      </ul>
+
+      <h3>Device drivers</h3>
+      <p>The operating system can manage hardware in general terms, but it doesn't know the fine detail of every specific model of printer, graphics card, or scanner on the market. That's the job of a <strong>device driver</strong>: software supplied for a specific piece of hardware that translates the operating system's general instructions (like "print") into the exact commands that particular device understands.</p>
+
+      <div class="diagram vertical">
+        <div class="dbox app">Application</div>
+        <div class="darrow">&#8597;</div>
+        <div class="dbox os">Operating system</div>
+        <div class="darrow">&#8597;</div>
+        <div class="dbox driver">Device driver</div>
+        <div class="darrow">&#8597;</div>
+        <div class="dbox hw">Hardware</div>
+      </div>
+      <p class="diagram-caption">A device driver translates general OS commands into instructions a specific device understands.</p>
+
+      <h3>Translators: turning source code into something the CPU can run</h3>
+      <p>Programs are written by people in a high-level language, but the CPU can only execute machine code. A <strong>translator</strong> converts one into the other. There are two main types.</p>
+
+      <h4>Compilers</h4>
+      <p>A <strong>compiler</strong> translates the entire program (the <em>source code</em>) into an executable machine-code file (the <em>object code</em>) in one pass, before the program is ever run. Because the whole thing is translated in advance, the finished executable can afterwards be run directly by the processor without the compiler needing to be present.</p>
+
+      <div class="diagram">
+        <div class="dbox file">Source code file</div>
+        <div class="darrow">&#8594;</div>
+        <div class="dbox os">Compiler</div>
+        <div class="darrow">&#8594;</div>
+        <div class="dbox file">Executable file</div>
+        <div class="darrow">&#8594;</div>
+        <div class="dbox proc">Executed by CPU</div>
+      </div>
+      <p class="diagram-caption">Compilation: the whole program is translated once, in advance of execution.</p>
+
+      <p>Compilation happens in three broad stages: <strong>lexical analysis</strong> (stripping out spaces/comments and breaking the code into tokens &mdash; keywords, identifiers, symbols, and so on), <strong>syntax analysis</strong> (checking the tokens actually obey the rules of the programming language's grammar), and finally <strong>code generation</strong> (producing the machine code for the target processor).</p>
+
+      <h4>Interpreters</h4>
+      <p>An <strong>interpreter</strong> also converts high-level code into machine code, but line by line, translating and immediately executing each statement before moving to the next. This makes it well suited to testing code while it's being written, since it can report an error the moment it's reached, rather than only after an entire program has finished compiling. The trade-off is that it tends to run more slowly overall, especially inside loops, because the same lines get re-translated every time they're reached.</p>
+
+      <table class="info-table">
+        <tr><th>Compiler</th><th>Interpreter</th></tr>
+        <tr><td>Translates the whole source code into object code at once, in advance</td><td>Translates and executes source code one line at a time</td></tr>
+        <tr><td>Once compiled, the object code can run without the compiler needing to be present</td><td>The source code has to be re-translated (and the interpreter needs to be present) every time it's run</td></tr>
+        <tr><td>Compiling can take time, which isn't ideal for on-the-fly testing</td><td>Only the code currently needed has to be translated, which suits testing small sections</td></tr>
+        <tr><td>Errors are reported only after compilation has finished</td><td>Errors are reported immediately, as they're found</td></tr>
+        <tr><td>The finished executable is optimised to run as efficiently as possible</td><td>Execution tends to be less efficient, since translation happens repeatedly</td></tr>
+      </table>
+
+      <h4>Linkers</h4>
+      <p>Large programs are usually split into several modules, each compiled separately into its own object file. A <strong>linker</strong> combines those separate object files &mdash; and any library code the program needs, such as common mathematical or input/output routines &mdash; into a single, complete executable file.</p>
+
+      <div class="diagram">
+        <div class="dbox file">Object file A</div>
+        <div class="dbox file">Object file B</div>
+        <div class="dbox proc">Library</div>
+      </div>
+      <div class="diagram" style="margin-top:-14px;">
+        <div class="darrow updown">&#8595;</div>
+      </div>
+      <div class="diagram" style="margin-top:-14px;">
+        <div class="dbox os">Linker</div>
+        <div class="darrow">&#8594;</div>
+        <div class="dbox app">Executable program</div>
+      </div>
+      <p class="diagram-caption">A linker combines separate object files (and library code) into one executable program.</p>
+
+      <h3>Try it yourself</h3>
+
+      <!-- Q6 -->
+      <div class="qcard">
+        <span class="qlabel">Question 6</span>
+        <p class="qtext">Identify two functions of an operating system.</p>
+        <textarea id="ans_q6" placeholder="Type your answer here..."></textarea>
+        <div class="qbtn-row"><button class="check-btn" onclick="checkAnswer('q6')">Check answer</button></div>
+        <div class="error-msg" id="err_q6">&#9888; Have a proper go first &mdash; you know more of this than you think.</div>
+        <div class="reveal" id="rev_q6">
+          <div class="rev-title">Model answer</div>
+          <p>Any two of: allocating memory to applications; managing input/output devices and data; opening and closing files on storage devices; scheduling processor time between running tasks; sending error or status messages; managing user logons and security.</p>
+          <div class="self-award">
+            <input type="checkbox" id="tick_q6" onchange="toggleTick('q6', 3)">
+            <label for="tick_q6">My answer covered the key points &mdash; award myself 3 points</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q7 -->
+      <div class="qcard">
+        <span class="qlabel">Question 7</span>
+        <p class="qtext">Describe the function of a compiler.</p>
+        <textarea id="ans_q7" placeholder="Type your answer here..."></textarea>
+        <div class="qbtn-row"><button class="check-btn" onclick="checkAnswer('q7')">Check answer</button></div>
+        <div class="error-msg" id="err_q7">&#9888; Write your own description before checking &mdash; that's the whole point of the exercise.</div>
+        <div class="reveal" id="rev_q7">
+          <div class="rev-title">Model answer</div>
+          <p>A compiler is a translator that converts a whole high-level source-code program into an executable machine-code file in one go, before the program runs. Once compiled, the executable can be run directly by the processor without needing the compiler present, so it runs efficiently.</p>
+          <div class="self-award">
+            <input type="checkbox" id="tick_q7" onchange="toggleTick('q7', 3)">
+            <label for="tick_q7">My answer covered the key points &mdash; award myself 3 points</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q8 -->
+      <div class="qcard">
+        <span class="qlabel">Question 8</span>
+        <p class="qtext">Describe two advantages of an interpreter over a compiler.</p>
+        <textarea id="ans_q8" placeholder="Type your answer here..."></textarea>
+        <div class="qbtn-row"><button class="check-btn" onclick="checkAnswer('q8')">Check answer</button></div>
+        <div class="error-msg" id="err_q8">&#9888; Attempt it yourself first &mdash; think about testing and debugging.</div>
+        <div class="reveal" id="rev_q8">
+          <div class="rev-title">Model answer</div>
+          <p>Any two of: an interpreter reports errors immediately, line by line, rather than only after the whole program has compiled, which is useful for debugging; it doesn't require the time-consuming step of compiling the whole program before testing, so it suits on-the-fly testing; only the code actually being used needs to be translated at any one time.</p>
+          <div class="self-award">
+            <input type="checkbox" id="tick_q8" onchange="toggleTick('q8', 3)">
+            <label for="tick_q8">My answer covered the key points &mdash; award myself 3 points</label>
+          </div>
+        </div>
+      </div>
+
+      <h3>Quick check: multiple choice</h3>
+
+      <div class="mcq" id="mcq_m6" data-answered="0">
+        <span class="qlabel">MCQ 6</span>
+        <p class="qtext">What sits between hardware and applications, managing tasks such as memory allocation and input/output?</p>
+        <button class="option" data-correct="false" onclick="answerMCQ('m6', this, false, 2)">Device driver</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m6', this, false, 2)">Compiler</button>
+        <button class="option" data-correct="true" onclick="answerMCQ('m6', this, true, 2)">Operating system</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m6', this, false, 2)">Utility software</button>
+        <div class="mcq-feedback" id="fb_m6"></div>
+      </div>
+
+      <div class="mcq" id="mcq_m7" data-answered="0">
+        <span class="qlabel">MCQ 7</span>
+        <p class="qtext">What is the purpose of a device driver?</p>
+        <button class="option" data-correct="false" onclick="answerMCQ('m7', this, false, 2)">To translate high-level code into machine code</button>
+        <button class="option" data-correct="true" onclick="answerMCQ('m7', this, true, 2)">To let the operating system communicate with a specific piece of hardware without needing to know every detail of it</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m7', this, false, 2)">To back up files automatically</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m7', this, false, 2)">To allocate memory to every running application</button>
+        <div class="mcq-feedback" id="fb_m7"></div>
+      </div>
+
+      <div class="mcq" id="mcq_m8" data-answered="0">
+        <span class="qlabel">MCQ 8</span>
+        <p class="qtext">Which type of translator converts the whole source code into an executable file before the program is run?</p>
+        <button class="option" data-correct="false" onclick="answerMCQ('m8', this, false, 2)">Interpreter</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m8', this, false, 2)">Linker</button>
+        <button class="option" data-correct="true" onclick="answerMCQ('m8', this, true, 2)">Compiler</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m8', this, false, 2)">Device driver</button>
+        <div class="mcq-feedback" id="fb_m8"></div>
+      </div>
+
+      <div class="mcq" id="mcq_m9" data-answered="0">
+        <span class="qlabel">MCQ 9</span>
+        <p class="qtext">Which is a genuine advantage of a compiler over an interpreter?</p>
+        <button class="option" data-correct="false" onclick="answerMCQ('m9', this, false, 2)">It reports errors line by line as the code runs</button>
+        <button class="option" data-correct="true" onclick="answerMCQ('m9', this, true, 2)">The compiled executable can be run without the original translator present, so it runs efficiently</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m9', this, false, 2)">It never needs recompiling for a different operating system</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m9', this, false, 2)">It always produces a smaller file than an interpreter would</button>
+        <div class="mcq-feedback" id="fb_m9"></div>
+      </div>
+
+      <div class="mcq" id="mcq_m10" data-answered="0">
+        <span class="qlabel">MCQ 10</span>
+        <p class="qtext">What does a linker do?</p>
+        <button class="option" data-correct="false" onclick="answerMCQ('m10', this, false, 2)">Detects and removes viruses</button>
+        <button class="option" data-correct="true" onclick="answerMCQ('m10', this, true, 2)">Combines separate compiled object files (and library code) into one executable program</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m10', this, false, 2)">Compresses files to save storage space</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m10', this, false, 2)">Reorganises fragmented files on a disk</button>
+        <div class="mcq-feedback" id="fb_m10"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ SECTION 3: UTILITY SOFTWARE ============ -->
+  <section class="topic" id="utility-software">
+    <h2>3. Utility Software</h2>
+    <div class="topic-body">
+
+      <p><strong>Utility software</strong> is system software that performs a specific maintenance job on a computer, rather than running the whole system the way an operating system does. Some utilities come pre-installed with an operating system; others are installed separately.</p>
+
+      <div class="keyword-box">
+        <div class="kw-title">Key word</div>
+        <p><strong>Utility software</strong>: software that performs a specific maintenance task on a computer system.</p>
+      </div>
+
+      <h3>Anti-virus (antimalware) software</h3>
+      <p>Anti-virus software has two main jobs. First, an anti-virus <em>monitor</em> runs continuously in the background, watching for suspicious behaviour or known danger signs, so it can stop malware being run in the first place. Second, it can <em>scan</em> the system to check for viruses or malware that may already be present. If it isn't fully sure whether a file is safe, the safest response is often to place it into <strong>quarantine</strong>: an isolated area where the file can't run or spread, but also isn't deleted outright, so it can be checked more thoroughly before a final decision is made.</p>
+
+      <h3>Backup</h3>
+      <p>A <strong>backup</strong> utility creates a second copy of data or programs from storage. It can be run manually whenever a user chooses, or scheduled to happen automatically at set times. Users are usually able to choose which folders and files get backed up, and where the backup copy is stored, so that if the original data is lost or damaged, it can be restored.</p>
+
+      <h3>Data compression</h3>
+      <p>Compression utilities shrink the size of files &mdash; a single file, several selected files, or a whole folder &mdash; so they take up less storage space and transfer between locations more quickly. The trade-off is that a compressed file usually takes slightly longer to open again, since it first has to be decompressed.</p>
+
+      <h3>Disk defragmentation</h3>
+      <p>To understand why defragmentation matters, it helps to know a little about how a hard disk drive (HDD) stores data. A disk is divided into <strong>tracks</strong>, and each track is split into <strong>sectors</strong>; a read/write head moves across the spinning platter to read and write data. Whenever possible, a computer tries to store a file's data together, in the same or adjacent tracks, because that's the fastest arrangement &mdash; the read/write head has the least distance to travel.</p>
+
+      <p>Over time, as files are created, resized, and deleted, gaps appear in this neat arrangement. When a file grows and there isn't enough free space next to it, the extra data has to be written somewhere else on the disk entirely. Multiply this across thousands of files and the disk becomes <strong>fragmented</strong>: pieces of the same file scattered in different, non-adjacent locations. Opening a fragmented file then means the read/write head has to jump between multiple places on the disk, which is much slower than reading one continuous block.</p>
+
+      <p>A <strong>defragmentation</strong> utility fixes this by reorganising the disk so that each file's data is moved back together into one contiguous block, using free space and whole cylinders where it can. This reduces how far the read/write head has to travel and noticeably improves performance, especially once a system has been used heavily for a long time.</p>
+
+      <div class="reflect-box">
+        <strong>Just for fun &mdash; a reflection, not graded:</strong> where do you think the phrase "my computer has crashed" originally came from? Jot down a guess if you like &mdash; no right answer required here.
+        <textarea placeholder="Optional: your guess..."></textarea>
+      </div>
+
+      <h3>Try it yourself</h3>
+
+      <!-- Q9 -->
+      <div class="qcard">
+        <span class="qlabel">Question 9</span>
+        <p class="qtext">A school's file server has become slow to open student project files, even though there is plenty of free storage space left. Suggest which utility software could help, and explain how it would improve performance.</p>
+        <textarea id="ans_q9" placeholder="Type your answer here..."></textarea>
+        <div class="qbtn-row"><button class="check-btn" onclick="checkAnswer('q9')">Check answer</button></div>
+        <div class="error-msg" id="err_q9">&#9888; Think it through and write something down first &mdash; then compare.</div>
+        <div class="reveal" id="rev_q9">
+          <div class="rev-title">Model answer</div>
+          <p>A disk defragmentation utility would help. Over time, files become fragmented and split across scattered locations on the disk, so the read/write head has to move to many different places just to reopen one file, which slows things down even though there's plenty of free space overall. Defragmentation reorganises the disk so each file's data is stored together in adjacent sectors, so the head moves less and files open faster.</p>
+          <div class="self-award">
+            <input type="checkbox" id="tick_q9" onchange="toggleTick('q9', 3)">
+            <label for="tick_q9">My answer covered the key points &mdash; award myself 3 points</label>
+          </div>
+        </div>
+      </div>
+
+      <h3>Quick check: multiple choice</h3>
+
+      <div class="mcq" id="mcq_m11" data-answered="0">
+        <span class="qlabel">MCQ 11</span>
+        <p class="qtext">What is the main purpose of utility software?</p>
+        <button class="option" data-correct="false" onclick="answerMCQ('m11', this, false, 2)">To manage all hardware resources, the way an operating system does</button>
+        <button class="option" data-correct="true" onclick="answerMCQ('m11', this, true, 2)">To perform a specific maintenance task on a computer system</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m11', this, false, 2)">To translate source code into machine code</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m11', this, false, 2)">To provide the main user interface of the computer</button>
+        <div class="mcq-feedback" id="fb_m11"></div>
+      </div>
+
+      <div class="mcq" id="mcq_m12" data-answered="0">
+        <span class="qlabel">MCQ 12</span>
+        <p class="qtext">When anti-virus software finds a file it isn't fully sure about, what might it do?</p>
+        <button class="option" data-correct="false" onclick="answerMCQ('m12', this, false, 2)">Immediately reformat the whole disk</button>
+        <button class="option" data-correct="true" onclick="answerMCQ('m12', this, true, 2)">Place the file in quarantine so it's isolated until it can be checked further</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m12', this, false, 2)">Ignore it completely</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m12', this, false, 2)">Automatically send a copy to every user on the network</button>
+        <div class="mcq-feedback" id="fb_m12"></div>
+      </div>
+
+      <div class="mcq" id="mcq_m13" data-answered="0">
+        <span class="qlabel">MCQ 13</span>
+        <p class="qtext">What does a backup utility do?</p>
+        <button class="option" data-correct="false" onclick="answerMCQ('m13', this, false, 2)">Reduces the size of files to save storage space</button>
+        <button class="option" data-correct="true" onclick="answerMCQ('m13', this, true, 2)">Creates an extra copy of data or programs that can be restored if the original is lost or damaged</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m13', this, false, 2)">Removes fragmented files from a disk</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m13', this, false, 2)">Scans incoming emails for malware only</button>
+        <div class="mcq-feedback" id="fb_m13"></div>
+      </div>
+
+      <div class="mcq" id="mcq_m14" data-answered="0">
+        <span class="qlabel">MCQ 14</span>
+        <p class="qtext">What is disk fragmentation?</p>
+        <button class="option" data-correct="false" onclick="answerMCQ('m14', this, false, 2)">When a disk runs completely out of storage space</button>
+        <button class="option" data-correct="true" onclick="answerMCQ('m14', this, true, 2)">When parts of a file become scattered across non-adjacent areas of the disk</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m14', this, false, 2)">When a file is permanently deleted</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m14', this, false, 2)">When a disk is formatted for the very first time</button>
+        <div class="mcq-feedback" id="fb_m14"></div>
+      </div>
+
+      <div class="mcq" id="mcq_m15" data-answered="0">
+        <span class="qlabel">MCQ 15</span>
+        <p class="qtext">Which utility reduces the storage size of files, at the cost of taking a little longer to open them again?</p>
+        <button class="option" data-correct="false" onclick="answerMCQ('m15', this, false, 2)">Backup utility</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m15', this, false, 2)">Anti-virus utility</button>
+        <button class="option" data-correct="true" onclick="answerMCQ('m15', this, true, 2)">Data compression utility</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m15', this, false, 2)">Defragmentation utility</button>
+        <div class="mcq-feedback" id="fb_m15"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ SUMMARY ============ -->
+  <section class="topic" id="summary">
+    <h2>Summary Checklist</h2>
+    <div class="topic-body">
+      <p>Tick off each idea once you're confident you could explain it to someone else without looking it up.</p>
+      <ul class="summary-list">
+        <li><input type="checkbox"><span>I can describe what a mainframe computer is used for.</span></li>
+        <li><input type="checkbox"><span>I can describe what a supercomputer is used for, and how that differs from a mainframe.</span></li>
+        <li><input type="checkbox"><span>I can explain RAS (Reliability, Availability, Serviceability).</span></li>
+        <li><input type="checkbox"><span>I can explain why MFLOPS is used instead of MIPS for supercomputers.</span></li>
+        <li><input type="checkbox"><span>I can explain what an operating system does.</span></li>
+        <li><input type="checkbox"><span>I can explain what a device driver does and why it's needed.</span></li>
+        <li><input type="checkbox"><span>I can compare a compiler and an interpreter.</span></li>
+        <li><input type="checkbox"><span>I can describe what a linker does.</span></li>
+        <li><input type="checkbox"><span>I can explain what utility software is, with examples (anti-virus, backup, compression, defragmentation).</span></li>
+        <li><input type="checkbox"><span>I can explain how and why files become fragmented, and what defragmentation does about it.</span></li>
+      </ul>
+
+      <div class="final-score-box">
+        <div>Your final score</div>
+        <div class="big"><span id="finalScore">0</span> / 57</div>
+        <div id="finalMsg" style="margin-top:8px; font-size:.9rem;">Work through the questions above to build your score.</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>Cambridge IT AS & A Level &mdash; Hardware &amp; Software study page. Built for self-study &mdash; give every question a real attempt before checking.</footer>
+
+<script>
+  var state = { score: 0, attempted: new Set(), totalItems: 24 };
+
+  function updateProgress(){
+    var pct = Math.min(100, Math.round((state.attempted.size / state.totalItems) * 100));
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  function updateScore(){
+    document.getElementById('scoreDisplay').textContent = state.score;
+    document.getElementById('finalScore').textContent = state.score;
+    var msgEl = document.getElementById('finalMsg');
+    var max = 57;
+    if(state.score <= 0){
+      msgEl.textContent = 'Work through the questions above to build your score.';
+    } else if(state.score < max * 0.5){
+      msgEl.textContent = 'Good start — go back over any questions you weren\'t sure about.';
+    } else if(state.score < max * 0.85){
+      msgEl.textContent = 'Solid progress — a bit more revision and this will be locked in.';
+    } else {
+      msgEl.textContent = 'Excellent — you clearly know this topic well.';
+    }
+  }
+
+  function markAttempted(id){
+    if(!state.attempted.has(id)){
+      state.attempted.add(id);
+      updateProgress();
+    }
+  }
+
+  function checkAnswer(id){
+    var ta = document.getElementById('ans_' + id);
+    var val = ta.value.trim();
+    var err = document.getElementById('err_' + id);
+    var rev = document.getElementById('rev_' + id);
+    if(val.length < 3){
+      err.style.display = 'flex';
+      rev.style.display = 'none';
+      return;
+    }
+    err.style.display = 'none';
+    rev.style.display = 'block';
+    markAttempted(id);
+  }
+
+  function toggleTick(id, points){
+    var box = document.getElementById('tick_' + id);
+    if(box.checked){
+      state.score += points;
+    } else {
+      state.score -= points;
+    }
+    updateScore();
+  }
+
+  function answerMCQ(id, chosenEl, isCorrect, points){
+    var container = document.getElementById('mcq_' + id);
+    if(container.dataset.answered === '1') return;
+    container.dataset.answered = '1';
+
+    var options = container.querySelectorAll('.option');
+    options.forEach(function(opt){
+      opt.disabled = true;
+      if(opt.dataset.correct === 'true'){
+        opt.classList.add('correct');
+      }
+    });
+    if(!isCorrect){
+      chosenEl.classList.add('incorrect');
+    }
+
+    var fb = document.getElementById('fb_' + id);
+    fb.style.display = 'block';
+    if(isCorrect){
+      fb.style.color = '#15803d';
+      fb.textContent = 'Correct! +' + points + ' points.';
+      state.score += points;
+    } else {
+      fb.style.color = '#b91c1c';
+      fb.textContent = 'Not quite — the correct answer is now highlighted in green.';
+    }
+
+    markAttempted(id);
+    updateScore();
+  }
+
+  updateScore();
+  updateProgress();
+</script>
+
+</body>
+</html>
