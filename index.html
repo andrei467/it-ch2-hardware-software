@@ -32,10 +32,34 @@
   }
   a{color:var(--indigo);}
 
+  /* ---- Lesson next bar ---- */
+  div.lessonbar{
+    position:sticky;
+    top:0;
+    z-index:60;
+    background:var(--indigo-dark);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    padding:8px 16px;
+    font-size:.85rem;
+  }
+  .lessonbar a.lesson-link{
+    color:#fff;
+    text-decoration:none;
+    background:rgba(255,255,255,.15);
+    padding:6px 12px;
+    border-radius:5px;
+    font-weight:bold;
+    white-space:nowrap;
+  }
+  .lessonbar a.lesson-link:hover{background:rgba(255,255,255,.3);}
+
   /* ---- Top bar ---- */
   header.topbar{
     position:sticky;
-    top:0;
+    top:37px;
     z-index:50;
     background:var(--indigo);
     color:#fff;
@@ -434,6 +458,10 @@
 </style>
 </head>
 <body>
+
+<div class="lessonbar">
+  <a class="lesson-link" href="storage-file-management-software.html">Next theory &#9654;</a>
+</div>
 
 <header class="topbar">
   <div class="topbar-inner">
