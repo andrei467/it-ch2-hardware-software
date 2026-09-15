@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Storage Utilities, File Management &amp; Software Types | Cambridge IT Study Page</title>
+<style>
+  :root{
+    --indigo:#4f46e5;
+    --indigo-dark:#3730a3;
+    --teal:#0d9488;
+    --teal-dark:#0f766e;
+    --orange:#f97316;
+    --orange-dark:#c2410c;
+    --bg:#f6f6f4;
+    --card:#ffffff;
+    --text:#1f2937;
+    --muted:#6b7280;
+    --border:#e5e7eb;
+    --green:#15803d;
+    --green-bg:#ecfdf5;
+    --red:#b91c1c;
+    --red-bg:#fef2f2;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.55;
+  }
+  a{color:var(--indigo);}
+
+  /* ---- Lesson prev/next bar ---- */
+  div.lessonbar{
+    position:sticky;
+    top:0;
+    z-index:60;
+    background:var(--indigo-dark);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:8px 16px;
+    font-size:.85rem;
+  }
+  .lessonbar a.lesson-link{
+    color:#fff;
+    text-decoration:none;
+    background:rgba(255,255,255,.15);
+    padding:6px 12px;
+    border-radius:5px;
+    font-weight:bold;
+    white-space:nowrap;
+  }
+  .lessonbar a.lesson-link:hover{background:rgba(255,255,255,.3);}
+  .lessonbar .lesson-title{
+    text-align:center;
+    flex:1;
+    padding:0 10px;
+    opacity:.9;
+    display:none;
+  }
+  @media (min-width:640px){ .lessonbar .lesson-title{display:block;} }
+
+  /* ---- Top bar ---- */
+  header.topbar{
+    position:sticky;
+    top:37px;
+    z-index:50;
+    background:var(--indigo);
+    color:#fff;
+    padding:14px 20px;
+    box-shadow:0 2px 6px rgba(0,0,0,.15);
+  }
+  .topbar-inner{
+    max-width:1000px;
+    margin:0 auto;
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+  }
+  .brand{
+    font-size:1.05rem;
+    font-weight:bold;
+  }
+  .brand small{
+    display:block;
+    font-weight:normal;
+    font-size:.75rem;
+    opacity:.85;
+  }
+  nav.pagenav{
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+  }
+  nav.pagenav a{
+    color:#fff;
+    text-decoration:none;
+    font-size:.82rem;
+    background:rgba(255,255,255,.15);
+    padding:6px 10px;
+    border-radius:5px;
+  }
+  nav.pagenav a:hover{background:rgba(255,255,255,.28);}
+  .score-pill{
+    background:var(--orange);
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:.85rem;
+    font-weight:bold;
+    white-space:nowrap;
+  }
+  .progress-track{
+    max-width:1000px;
+    margin:10px auto 0;
+    height:8px;
+    background:rgba(255,255,255,.25);
+    border-radius:4px;
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;
+    width:0%;
+    background:var(--orange);
+    transition:width .4s ease;
+  }
+
+  /* ---- Layout ---- */
+  main{
+    max-width:900px;
+    margin:0 auto;
+    padding:24px 18px 80px;
+  }
+  .intro-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-left:6px solid var(--indigo);
+    border-radius:8px;
+    padding:20px 22px;
+    margin-bottom:30px;
+  }
+  .intro-card h1{
+    margin-top:0;
+    color:var(--indigo-dark);
+    font-size:1.5rem;
+  }
+  ul.check-before{
+    padding-left:20px;
+    margin:10px 0 0;
+  }
+  ul.check-before li{margin-bottom:6px;}
+
+  section.topic{
+    margin-bottom:56px;
+    scroll-margin-top:150px;
+  }
+  section.topic > h2{
+    color:#fff;
+    background:var(--teal);
+    padding:12px 18px;
+    border-radius:8px 8px 0 0;
+    margin:0;
+    font-size:1.3rem;
+  }
+  .topic-body{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-top:none;
+    border-radius:0 0 8px 8px;
+    padding:22px;
+  }
+  h3{
+    color:var(--teal-dark);
+    border-bottom:2px solid var(--border);
+    padding-bottom:6px;
+    margin-top:34px;
+  }
+  h3:first-child{margin-top:0;}
+  h4{color:var(--indigo-dark); margin-bottom:6px;}
+
+  .keyword-box{
+    background:#fff7ed;
+    border:1px solid #fed7aa;
+    border-left:5px solid var(--orange);
+    border-radius:6px;
+    padding:12px 16px;
+    margin:16px 0;
+  }
+  .keyword-box .kw-title{
+    text-transform:uppercase;
+    font-size:.72rem;
+    letter-spacing:.04em;
+    color:var(--orange-dark);
+    font-weight:bold;
+    margin-bottom:4px;
+  }
+  .keyword-box strong{color:var(--orange-dark);}
+
+  table.info-table{
+    width:100%;
+    border-collapse:collapse;
+    margin:16px 0;
+    font-size:.92rem;
+  }
+  table.info-table th, table.info-table td{
+    border:1px solid var(--border);
+    padding:9px 12px;
+    text-align:left;
+    vertical-align:top;
+  }
+  table.info-table th{
+    background:var(--indigo);
+    color:#fff;
+  }
+  table.info-table tr:nth-child(even) td{background:#f9fafb;}
+
+  .reflect-box{
+    background:#eef2ff;
+    border:1px solid #c7d2fe;
+    border-radius:8px;
+    padding:14px 18px;
+    margin:20px 0;
+    font-size:.9rem;
+  }
+  .reflect-box textarea{
+    width:100%;
+    min-height:50px;
+    margin-top:8px;
+    padding:8px;
+    border:1px solid #c7d2fe;
+    border-radius:6px;
+    font-family:Arial, sans-serif;
+  }
+
+  /* interactive question card */
+  .qcard{
+    background:#fafaf9;
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:18px 20px;
+    margin:22px 0;
+  }
+  .qcard .qlabel{
+    display:inline-block;
+    background:var(--indigo);
+    color:#fff;
+    font-size:.72rem;
+    font-weight:bold;
+    padding:3px 9px;
+    border-radius:4px;
+    margin-bottom:8px;
+  }
+  .qcard p.qtext{font-weight:bold; margin:6px 0 10px;}
+  .qcard textarea{
+    width:100%;
+    min-height:80px;
+    padding:10px;
+    font-family:Arial, sans-serif;
+    font-size:.92rem;
+    border:1px solid #cbd5e1;
+    border-radius:6px;
+    resize:vertical;
+  }
+  .qcard textarea:focus{outline:2px solid var(--indigo); border-color:var(--indigo);}
+  .qbtn-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-top:10px;
+    flex-wrap:wrap;
+  }
+  button.check-btn{
+    background:var(--indigo);
+    color:#fff;
+    border:none;
+    padding:9px 16px;
+    border-radius:6px;
+    font-size:.88rem;
+    font-weight:bold;
+    cursor:pointer;
+  }
+  button.check-btn:hover{background:var(--indigo-dark);}
+  button.check-btn:disabled{background:#a5b4fc; cursor:not-allowed;}
+  .error-msg{
+    display:none;
+    align-items:center;
+    gap:8px;
+    background:var(--red-bg);
+    color:var(--red);
+    border:1px solid #fecaca;
+    padding:9px 12px;
+    border-radius:6px;
+    font-size:.86rem;
+    margin-top:10px;
+  }
+  .reveal{
+    display:none;
+    margin-top:14px;
+    background:var(--green-bg);
+    border:1px solid #a7f3d0;
+    border-left:5px solid var(--green);
+    border-radius:6px;
+    padding:12px 16px;
+  }
+  .reveal .rev-title{
+    font-size:.72rem;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    font-weight:bold;
+    color:var(--green);
+    margin-bottom:5px;
+  }
+  .self-award{
+    margin-top:12px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:.88rem;
+    color:var(--muted);
+  }
+  .self-award input{width:17px; height:17px;}
+  .self-award label{cursor:pointer;}
+
+  /* MCQ */
+  .mcq{
+    background:#fafaf9;
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:18px 20px;
+    margin:22px 0;
+  }
+  .mcq .qlabel{
+    display:inline-block;
+    background:var(--orange);
+    color:#fff;
+    font-size:.72rem;
+    font-weight:bold;
+    padding:3px 9px;
+    border-radius:4px;
+    margin-bottom:8px;
+  }
+  .mcq p.qtext{font-weight:bold; margin:6px 0 12px;}
+  .option{
+    display:block;
+    width:100%;
+    text-align:left;
+    background:#fff;
+    border:1px solid #cbd5e1;
+    border-radius:6px;
+    padding:10px 14px;
+    margin-bottom:8px;
+    font-size:.9rem;
+    font-family:Arial, sans-serif;
+    cursor:pointer;
+    color:var(--text);
+  }
+  .option:hover{border-color:var(--indigo);}
+  .option.correct{
+    background:var(--green-bg);
+    border-color:var(--green);
+    color:var(--green);
+    font-weight:bold;
+  }
+  .option.incorrect{
+    background:var(--red-bg);
+    border-color:var(--red);
+    color:var(--red);
+    font-weight:bold;
+  }
+  .mcq-feedback{
+    margin-top:8px;
+    font-size:.85rem;
+    font-weight:bold;
+    display:none;
+  }
+
+  /* ---- Fragmentation simulator ---- */
+  .simcard{
+    background:#fafaf9;
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:18px 20px;
+    margin:22px 0;
+  }
+  .simcard .qlabel{
+    display:inline-block;
+    background:var(--teal);
+    color:#fff;
+    font-size:.72rem;
+    font-weight:bold;
+    padding:3px 9px;
+    border-radius:4px;
+    margin-bottom:8px;
+  }
+  .sim-caption{
+    font-size:.92rem;
+    margin:10px 0 16px;
+    min-height:44px;
+  }
+  .sim-grid{
+    display:grid;
+    grid-template-columns:repeat(8, 1fr);
+    gap:6px;
+    max-width:520px;
+    margin:0 auto 14px;
+  }
+  .sector{
+    aspect-ratio:1;
+    border-radius:5px;
+    border:2px solid #cbd5e1;
+    background:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:.8rem;
+    font-weight:bold;
+    color:#fff;
+    user-select:none;
+  }
+  .sector.free{background:#fff; color:#94a3b8; border-color:#e2e8f0;}
+  .sector.M{background:#4f46e5; border-color:#3730a3;}
+  .sector.N{background:#f97316; border-color:#c2410c;}
+  .sector.clickable{cursor:pointer;}
+  .sector.selected{outline:3px solid #1f2937; outline-offset:1px;}
+  .sector.sel-correct{outline:3px solid var(--green); outline-offset:1px;}
+  .sector.sel-wrong{outline:3px solid var(--red); outline-offset:1px;}
+  .sim-legend{
+    display:flex;
+    gap:16px;
+    justify-content:center;
+    font-size:.82rem;
+    margin-bottom:14px;
+    flex-wrap:wrap;
+  }
+  .sim-legend span{display:flex; align-items:center; gap:6px;}
+  .sim-legend i{width:14px; height:14px; border-radius:3px; display:inline-block;}
+  .sim-btn-row{
+    display:flex;
+    gap:10px;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin-top:8px;
+  }
+  button.sim-btn{
+    background:var(--teal);
+    color:#fff;
+    border:none;
+    padding:9px 16px;
+    border-radius:6px;
+    font-size:.88rem;
+    font-weight:bold;
+    cursor:pointer;
+  }
+  button.sim-btn:hover{background:var(--teal-dark);}
+  button.sim-btn:disabled{background:#99d8d1; cursor:not-allowed;}
+  button.sim-btn.secondary{background:#e2e8f0; color:var(--text);}
+  button.sim-btn.secondary:hover{background:#cbd5e1;}
+  .sim-feedback{
+    text-align:center;
+    font-weight:bold;
+    font-size:.9rem;
+    margin-top:10px;
+    display:none;
+  }
+
+  /* ---- Sorting activity ---- */
+  .sortcard{
+    background:#fafaf9;
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:18px 20px;
+    margin:22px 0;
+  }
+  .sortcard .qlabel{
+    display:inline-block;
+    background:var(--indigo);
+    color:#fff;
+    font-size:.72rem;
+    font-weight:bold;
+    padding:3px 9px;
+    border-radius:4px;
+    margin-bottom:10px;
+  }
+  .sort-item{
+    background:#fff;
+    border:1px solid #cbd5e1;
+    border-radius:6px;
+    padding:10px 14px;
+    margin-bottom:10px;
+  }
+  .sort-item p{margin:0 0 8px; font-size:.92rem;}
+  .sort-btns{display:flex; gap:8px; flex-wrap:wrap;}
+  .sort-btn{
+    flex:1;
+    min-width:140px;
+    border:1px solid #cbd5e1;
+    background:#fff;
+    padding:8px 10px;
+    border-radius:6px;
+    font-size:.85rem;
+    font-weight:bold;
+    cursor:pointer;
+  }
+  .sort-btn:hover{border-color:var(--indigo);}
+  .sort-btn.correct{background:var(--green-bg); border-color:var(--green); color:var(--green);}
+  .sort-btn.incorrect{background:var(--red-bg); border-color:var(--red); color:var(--red);}
+  .sort-tag{
+    display:none;
+    font-size:.78rem;
+    margin-top:6px;
+    font-weight:bold;
+  }
+
+  .summary-list{
+    list-style:none;
+    padding:0;
+  }
+  .summary-list li{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    background:#fafaf9;
+    border:1px solid var(--border);
+    border-radius:6px;
+    padding:10px 14px;
+    margin-bottom:8px;
+    font-size:.92rem;
+  }
+  .summary-list input{margin-top:3px; width:16px; height:16px;}
+
+  .final-score-box{
+    text-align:center;
+    background:var(--indigo);
+    color:#fff;
+    border-radius:10px;
+    padding:28px;
+    margin-top:20px;
+  }
+  .final-score-box .big{
+    font-size:2.4rem;
+    font-weight:bold;
+    color:var(--orange);
+  }
+
+  footer{
+    text-align:center;
+    color:var(--muted);
+    font-size:.82rem;
+    padding:20px;
+  }
+
+  @media (max-width:600px){
+    .sector{font-size:.68rem;}
+  }
+</style>
+</head>
+<body>
+
+<div class="lessonbar">
+  <a class="lesson-link" href="index.html">&#9664; Previous theory</a>
+  <span class="lesson-title">Storage Utilities, File Management &amp; Software Types</span>
+</div>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">Storage, File Management &amp; Software Types
+      <small>Cambridge IT AS &amp; A Level &mdash; Data Compression, Defragmentation &amp; Software Types</small>
+    </div>
+    <nav class="pagenav">
+      <a href="#compression">1. Compression</a>
+      <a href="#defragmentation">2. Defragmentation</a>
+      <a href="#file-management">3. File Management</a>
+      <a href="#software-types">4. Software Types</a>
+      <a href="#summary">Summary</a>
+    </nav>
+    <div class="score-pill">Score: <span id="scoreDisplay">0</span> / <span id="scoreMax">45</span></div>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+</header>
+
+<main>
+
+  <div class="intro-card">
+    <h1>Before you start</h1>
+    <p>Read each explanation and study the diagrams, then try every question yourself <strong>before</strong> checking the answer &mdash; that's how it actually sticks. Only tick the self-award box if your own answer genuinely covered the same points; ticking it without trying first only cheats you out of the revision.</p>
+    <ul class="check-before">
+      <li>Do you know why a file might be compressed before it is sent somewhere?</li>
+      <li>Can you describe the parts of a hard disk: platter, track, sector, cylinder?</li>
+      <li>Do you understand why fragmented files slow a disk down?</li>
+      <li>Can you explain the difference between custom-written and off-the-shelf software?</li>
+    </ul>
+  </div>
+
+  <!-- ============ SECTION 1: DATA COMPRESSION ============ -->
+  <section class="topic" id="compression">
+    <h2>1. Data Compression</h2>
+    <div class="topic-body">
+
+      <h3>Why compress data?</h3>
+      <p>A <strong>data compression utility</strong> shrinks the size of a file (or a group of files, or a whole folder) so it takes up less storage space and can be moved from one place to another more quickly &mdash; over a network, by email, or on a USB drive. The trade-off is speed at the other end: because the data has to be unpacked again, a compressed file is slower to open than the original, uncompressed version.</p>
+
+      <div class="keyword-box">
+        <div class="kw-title">Key word</div>
+        <p><strong>Data compression:</strong> reducing the size of a file (or set of files) so it uses less storage space and transfers more quickly, at the cost of taking longer to open again.</p>
+      </div>
+
+      <h3>Try it yourself</h3>
+      <div class="qcard">
+        <span class="qlabel">Question 1</span>
+        <p class="qtext">A student needs to email a folder of project photos and documents to a teacher, but the school email system rejects attachments over 10MB. Explain how a compression utility would help, and describe one trade-off of using it.</p>
+        <textarea id="ans_q1" placeholder="Type your answer here..."></textarea>
+        <div class="qbtn-row"><button class="check-btn" onclick="checkAnswer('q1')">Check answer</button></div>
+        <div class="error-msg" id="err_q1">&#9888; Try writing your own answer first &mdash; then compare. Don't just click through.</div>
+        <div class="reveal" id="rev_q1">
+          <div class="rev-title">Model answer</div>
+          <p>Compressing the folder before attaching it would reduce its overall size, which could bring it under the 10MB limit and also make it upload and send faster. The trade-off is that once the teacher receives it, they will have to decompress (extract) the folder before they can open the files, and unpacking a compressed file takes a little longer than opening an uncompressed one.</p>
+          <div class="self-award">
+            <input type="checkbox" id="tick_q1" onchange="toggleTick('q1', 3)">
+            <label for="tick_q1">My answer covered the key points &mdash; award myself 3 points</label>
+          </div>
+        </div>
+      </div>
+
+      <h3>Quick check: multiple choice</h3>
+      <div class="mcq" id="mcq_m1" data-answered="0">
+        <span class="qlabel">MCQ 1</span>
+        <p class="qtext">What is the main disadvantage of compressing a file?</p>
+        <button class="option" data-correct="false" onclick="answerMCQ('m1', this, false, 2)">It permanently increases the file's size</button>
+        <button class="option" data-correct="true" onclick="answerMCQ('m1', this, true, 2)">The file takes longer to open again because it must be decompressed</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m1', this, false, 2)">It makes the file impossible to share by email</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m1', this, false, 2)">It deletes the original file automatically</button>
+        <div class="mcq-feedback" id="fb_m1"></div>
+      </div>
+
+      <div class="mcq" id="mcq_m2" data-answered="0">
+        <span class="qlabel">MCQ 2</span>
+        <p class="qtext">Data compression can be applied to:</p>
+        <button class="option" data-correct="false" onclick="answerMCQ('m2', this, false, 2)">Only a single file at a time</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m2', this, false, 2)">Only image files</button>
+        <button class="option" data-correct="true" onclick="answerMCQ('m2', this, true, 2)">A single file, a set of files, or a whole folder</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m2', this, false, 2)">Only files stored on a network server</button>
+        <div class="mcq-feedback" id="fb_m2"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ SECTION 2: DISK DEFRAGMENTATION ============ -->
+  <section class="topic" id="defragmentation">
+    <h2>2. Disk Defragmentation &amp; Formatting</h2>
+    <div class="topic-body">
+
+      <h3>Storing data on a hard disk</h3>
+      <p>A hard disk drive (HDD) has two main parts: the <strong>drive</strong> (the electronics that control everything) and the <strong>disk</strong> itself (the medium the data actually sits on). The disk is made of one or more spinning <strong>platters</strong>. An <strong>actuator arm</strong> swings a <strong>read/write head</strong> back and forth across each platter to reach the data it needs.</p>
+
+      <table class="info-table">
+        <tr><th>Term</th><th>What it means</th></tr>
+        <tr><td>Platter</td><td>A circular disk coated in magnetic material, where the data is actually stored.</td></tr>
+        <tr><td>Track</td><td>One of many concentric circles on a platter's surface.</td></tr>
+        <tr><td>Sector</td><td>A small wedge-shaped division of a track &mdash; the smallest unit the drive reads or writes at once.</td></tr>
+        <tr><td>Cylinder</td><td>The set of tracks that sit in the same position on every platter, stacked through the drive.</td></tr>
+        <tr><td>Cluster</td><td>A group of sectors treated as one unit for storing a file.</td></tr>
+      </table>
+
+      <p>Wherever possible, the drive tries to store a file's data within a single cylinder, because that requires the least movement from the actuator arm &mdash; and the arm's movement is the slowest part of the whole process.</p>
+
+      <h3>Fragmented files</h3>
+      <p>As a disk gets used, files are deleted, leaving gaps in the storage. When a file grows in size, it needs more space than it originally had, so if there isn't a big enough gap right next to it, the extra data has to be written somewhere else on the disk entirely. Once every nearby cylinder is full, files eventually have to be split across many small gaps scattered around the disk. This is <strong>fragmentation</strong>: when opening the file, the read/write head has to keep jumping to different locations, which makes the whole process much slower.</p>
+
+      <div class="keyword-box">
+        <div class="kw-title">Key words</div>
+        <p><strong>Fragmentation:</strong> when a file's data is split across scattered, non-adjacent areas of a disk.<br>
+        <strong>Defragmentation:</strong> a utility that reorganises a disk so each file's data is moved back into one contiguous block, reducing how far the read/write head has to travel.</p>
+      </div>
+
+      <h3>Fragmentation simulator</h3>
+      <p>Two files, <strong>M</strong> and <strong>N</strong>, are stored on a 16-sector disk. Step through what happens as they grow &mdash; then test whether you can spot the fragmentation yourself.</p>
+
+      <div class="simcard">
+        <span class="qlabel">Interactive activity</span>
+        <div class="sim-legend">
+          <span><i style="background:#4f46e5;"></i> File M</span>
+          <span><i style="background:#f97316;"></i> File N</span>
+          <span><i style="background:#fff; border:2px solid #cbd5e1;"></i> Free sector</span>
+        </div>
+        <div class="sim-grid" id="simGrid"></div>
+        <p class="sim-caption" id="simCaption"></p>
+        <div class="sim-btn-row" id="simControls"></div>
+        <p class="sim-feedback" id="simFeedback"></p>
+      </div>
+
+      <h3>Formatting</h3>
+      <p>Before a disk can be used for the first time, it must be <strong>formatted</strong>: this organises the surface into tracks and sectors so the drive knows where it can store data. Formatting a disk that is already in use wipes all the data on it and prepares the tracks and sectors again, exactly as if the disk were brand new.</p>
+
+      <div class="reflect-box">
+        <strong>Just for fun &mdash; a reflection, not graded:</strong> "defragging" used to be a routine job for HDD users. Why do you think it's rarely mentioned for modern laptops with SSDs instead of spinning hard disks? Jot down a guess if you like.
+        <textarea placeholder="Optional: your guess..."></textarea>
+      </div>
+
+      <h3>Try it yourself</h3>
+      <div class="qcard">
+        <span class="qlabel">Question 2</span>
+        <p class="qtext">A student's laptop has plenty of free storage space, but photo files that used to open instantly now take several seconds to load. Suggest which utility could help and explain how it would improve performance.</p>
+        <textarea id="ans_q2" placeholder="Type your answer here..."></textarea>
+        <div class="qbtn-row"><button class="check-btn" onclick="checkAnswer('q2')">Check answer</button></div>
+        <div class="error-msg" id="err_q2">&#9888; Have a go yourself before checking &mdash; don't just skip to the answer.</div>
+        <div class="reveal" id="rev_q2">
+          <div class="rev-title">Model answer</div>
+          <p>A disk defragmentation utility would help. Even with free space available overall, the photo files' data may have become fragmented &mdash; split into scattered sectors across the disk &mdash; from being edited, resized, or having other files deleted around them over time. This means the read/write head has to move to several different locations just to open one photo, which is slow. Defragmenting the disk moves each file's data back into one contiguous block, so the head barely has to move and files open faster.</p>
+          <div class="self-award">
+            <input type="checkbox" id="tick_q2" onchange="toggleTick('q2', 3)">
+            <label for="tick_q2">My answer covered the key points &mdash; award myself 3 points</label>
+          </div>
+        </div>
+      </div>
+
+      <h3>Quick check: multiple choice</h3>
+      <div class="mcq" id="mcq_m3" data-answered="0">
+        <span class="qlabel">MCQ 3</span>
+        <p class="qtext">What is disk fragmentation?</p>
+        <button class="option" data-correct="false" onclick="answerMCQ('m3', this, false, 2)">When a disk has run out of free storage space</button>
+        <button class="option" data-correct="true" onclick="answerMCQ('m3', this, true, 2)">When a file's data is split across scattered, non-adjacent areas of the disk</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m3', this, false, 2)">When a file is permanently deleted from the disk</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m3', this, false, 2)">When a disk is being formatted for the first time</button>
+        <div class="mcq-feedback" id="fb_m3"></div>
+      </div>
+
+      <div class="mcq" id="mcq_m4" data-answered="0">
+        <span class="qlabel">MCQ 4</span>
+        <p class="qtext">Why does a drive try to keep a file's data within one cylinder?</p>
+        <button class="option" data-correct="false" onclick="answerMCQ('m4', this, false, 2)">Because a cylinder can only hold one file at a time</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m4', this, false, 2)">Because it makes the platter spin faster</button>
+        <button class="option" data-correct="true" onclick="answerMCQ('m4', this, true, 2)">Because it needs the least movement from the actuator arm</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m4', this, false, 2)">Because it uses less electricity to write data that way</button>
+        <div class="mcq-feedback" id="fb_m4"></div>
+      </div>
+
+      <div class="mcq" id="mcq_m5" data-answered="0">
+        <span class="qlabel">MCQ 5</span>
+        <p class="qtext">What happens when you format a disk that already contains data?</p>
+        <button class="option" data-correct="false" onclick="answerMCQ('m5', this, false, 2)">The existing files are compressed to save space</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m5', this, false, 2)">The existing files are automatically defragmented</button>
+        <button class="option" data-correct="true" onclick="answerMCQ('m5', this, true, 2)">All the data is wiped and the tracks/sectors are prepared again</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m5', this, false, 2)">Only the largest files on the disk are deleted</button>
+        <div class="mcq-feedback" id="fb_m5"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ SECTION 3: FILE MANAGEMENT ============ -->
+  <section class="topic" id="file-management">
+    <h2>3. File Management</h2>
+    <div class="topic-body">
+
+      <h3>Managing files with utility software</h3>
+      <p>File-management utilities give users more control over copying, moving, and organising files than they might get by dragging things around manually. A file-copying utility can let a user copy only certain file types (say, just the Word documents from a folder full of mixed content), and can copy files to a single destination or synchronise them across several storage locations or devices at once &mdash; so when a file changes in one place, it updates everywhere else too.</p>
+
+      <p>Some files are locked by the operating system and can't be removed using normal deletion. A deletion utility can override this, permanently removing files and folders so they can't be restored or accessed &mdash; useful for clearing out temporary files, or software that a user or the system no longer needs.</p>
+
+      <div class="keyword-box">
+        <div class="kw-title">Key word</div>
+        <p><strong>Synchronisation:</strong> automatically keeping copies of the same files up to date across multiple storage locations or devices.</p>
+      </div>
+
+      <h3>Try it yourself</h3>
+      <div class="qcard">
+        <span class="qlabel">Question 3</span>
+        <p class="qtext">A teacher edits lesson resources on a laptop at school and wants the same up-to-date files available on a home computer without copying them manually every day. Explain how a file management utility could solve this.</p>
+        <textarea id="ans_q3" placeholder="Type your answer here..."></textarea>
+        <div class="qbtn-row"><button class="check-btn" onclick="checkAnswer('q3')">Check answer</button></div>
+        <div class="error-msg" id="err_q3">&#9888; Write something down first, then compare it to the model answer.</div>
+        <div class="reveal" id="rev_q3">
+          <div class="rev-title">Model answer</div>
+          <p>A file-synchronisation utility would solve this by automatically keeping the files on both machines identical: whenever a file is changed on the school laptop, the utility detects the change and updates the copy on the home computer (often via a shared cloud storage location), so the teacher never has to remember to copy files across manually.</p>
+          <div class="self-award">
+            <input type="checkbox" id="tick_q3" onchange="toggleTick('q3', 3)">
+            <label for="tick_q3">My answer covered the key points &mdash; award myself 3 points</label>
+          </div>
+        </div>
+      </div>
+
+      <h3>Quick check: multiple choice</h3>
+      <div class="mcq" id="mcq_m6" data-answered="0">
+        <span class="qlabel">MCQ 6</span>
+        <p class="qtext">What does it mean to synchronise files across storage locations?</p>
+        <button class="option" data-correct="false" onclick="answerMCQ('m6', this, false, 2)">Compressing all the files into one archive</button>
+        <button class="option" data-correct="true" onclick="answerMCQ('m6', this, true, 2)">Automatically keeping copies of the same files up to date in every location</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m6', this, false, 2)">Permanently deleting duplicate files</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m6', this, false, 2)">Scanning files for viruses before opening them</button>
+        <div class="mcq-feedback" id="fb_m6"></div>
+      </div>
+
+      <div class="mcq" id="mcq_m7" data-answered="0">
+        <span class="qlabel">MCQ 7</span>
+        <p class="qtext">Why might a user need a specialised deletion utility rather than normal deletion?</p>
+        <button class="option" data-correct="false" onclick="answerMCQ('m7', this, false, 2)">Normal deletion only works on image files</button>
+        <button class="option" data-correct="true" onclick="answerMCQ('m7', this, true, 2)">Some files are locked by the operating system and can't be removed normally</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m7', this, false, 2)">Normal deletion automatically compresses files instead of removing them</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m7', this, false, 2)">Deletion utilities are only needed on network servers</button>
+        <div class="mcq-feedback" id="fb_m7"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ SECTION 4: SOFTWARE TYPES ============ -->
+  <section class="topic" id="software-types">
+    <h2>4. Custom-Written &amp; Off-the-Shelf Software</h2>
+    <div class="topic-body">
+
+      <h3>Two ways to get software</h3>
+      <p><strong>Custom-written software</strong> is developed specifically for one client, built around their exact requirements. <strong>Off-the-shelf software</strong> is written for a general purpose and sold to a wide market &mdash; anyone can buy it at a fixed price, off a shelf or online.</p>
+
+      <div class="keyword-box">
+        <div class="kw-title">Key word</div>
+        <p><strong>Off-the-shelf software:</strong> general-purpose software already written and available for anyone to purchase.</p>
+      </div>
+
+      <table class="info-table">
+        <tr><th>Custom-written software</th><th>Off-the-shelf software</th></tr>
+        <tr><td>One client covers the entire development cost, so it is expensive.</td><td>Cost is spread across every customer who buys a copy, so it's much cheaper per user.</td></tr>
+        <tr><td>Takes a long time to design, build and test before the client can use it.</td><td>Available immediately &mdash; the customer can start using it right away.</td></tr>
+        <tr><td>Built to meet the client's exact requirements, with no unnecessary features.</td><td>May be missing features the customer needs, or include many they'll never use.</td></tr>
+      </table>
+
+      <h3>Sort the statements</h3>
+      <p>For each statement, click whether it describes custom-written or off-the-shelf software.</p>
+
+      <div class="sortcard">
+        <span class="qlabel">Sorting activity</span>
+        <div id="sortContainer"></div>
+        <p class="sim-feedback" id="sortFeedback" style="display:block;">0 / 8 sorted correctly</p>
+      </div>
+
+      <h3>Try it yourself</h3>
+      <div class="qcard">
+        <span class="qlabel">Question 4</span>
+        <p class="qtext">A small dental clinic wants software to manage patient records and appointments in a very specific way. A school wants standard word processing and spreadsheet software for its staff. Suggest which type of software each should choose, and explain why.</p>
+        <textarea id="ans_q4" placeholder="Type your answer here..."></textarea>
+        <div class="qbtn-row"><button class="check-btn" onclick="checkAnswer('q4')">Check answer</button></div>
+        <div class="error-msg" id="err_q4">&#9888; Give it a genuine try first &mdash; then compare your answer below.</div>
+        <div class="reveal" id="rev_q4">
+          <div class="rev-title">Model answer</div>
+          <p>The dental clinic should choose custom-written software, since its patient-record and appointment needs are specific to its own processes, and off-the-shelf software is unlikely to fit exactly. The school should choose off-the-shelf software, since word processing and spreadsheets are common, general-purpose tasks shared by almost every organisation, so ready-made software will already do the job at a much lower cost than commissioning something custom-built.</p>
+          <div class="self-award">
+            <input type="checkbox" id="tick_q4" onchange="toggleTick('q4', 3)">
+            <label for="tick_q4">My answer covered the key points &mdash; award myself 3 points</label>
+          </div>
+        </div>
+      </div>
+
+      <h3>Quick check: multiple choice</h3>
+      <div class="mcq" id="mcq_m8" data-answered="0">
+        <span class="qlabel">MCQ 8</span>
+        <p class="qtext">What is the main advantage of off-the-shelf software over custom-written software?</p>
+        <button class="option" data-correct="false" onclick="answerMCQ('m8', this, false, 2)">It always matches every requirement exactly</button>
+        <button class="option" data-correct="true" onclick="answerMCQ('m8', this, true, 2)">It is available immediately and cheaper, since the cost is shared across many buyers</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m8', this, false, 2)">It never needs updating</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m8', this, false, 2)">It is always more secure</button>
+        <div class="mcq-feedback" id="fb_m8"></div>
+      </div>
+
+      <div class="mcq" id="mcq_m9" data-answered="0">
+        <span class="qlabel">MCQ 9</span>
+        <p class="qtext">What is a likely disadvantage of choosing off-the-shelf software?</p>
+        <button class="option" data-correct="false" onclick="answerMCQ('m9', this, false, 2)">It cannot be purchased online</button>
+        <button class="option" data-correct="true" onclick="answerMCQ('m9', this, true, 2)">It may not do everything the organisation needs, or include unused features</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m9', this, false, 2)">It always costs more than custom-written software</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m9', this, false, 2)">Only one company is ever allowed to use it</button>
+        <div class="mcq-feedback" id="fb_m9"></div>
+      </div>
+
+      <div class="mcq" id="mcq_m10" data-answered="0">
+        <span class="qlabel">MCQ 10</span>
+        <p class="qtext">Custom-written software is best suited to an organisation that:</p>
+        <button class="option" data-correct="false" onclick="answerMCQ('m10', this, false, 2)">Wants the cheapest possible option</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m10', this, false, 2)">Needs the software available the same day</button>
+        <button class="option" data-correct="true" onclick="answerMCQ('m10', this, true, 2)">Has very specific requirements that existing software doesn't meet</button>
+        <button class="option" data-correct="false" onclick="answerMCQ('m10', this, false, 2)">Only needs word processing and spreadsheets</button>
+        <div class="mcq-feedback" id="fb_m10"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ SUMMARY ============ -->
+  <section class="topic" id="summary">
+    <h2>Summary Checklist</h2>
+    <div class="topic-body">
+      <p>Tick off each idea once you're confident you could explain it to someone else without looking it up.</p>
+      <ul class="summary-list">
+        <li><input type="checkbox"><span>I can explain what data compression does and its main trade-off.</span></li>
+        <li><input type="checkbox"><span>I can name the parts of a hard disk: platter, track, sector, cylinder, cluster.</span></li>
+        <li><input type="checkbox"><span>I can explain why data is stored within one cylinder where possible.</span></li>
+        <li><input type="checkbox"><span>I can explain what fragmentation is and why it slows a disk down.</span></li>
+        <li><input type="checkbox"><span>I can explain what defragmentation does to fix fragmentation.</span></li>
+        <li><input type="checkbox"><span>I can explain what formatting a disk does.</span></li>
+        <li><input type="checkbox"><span>I can explain what file-copying and synchronisation utilities do.</span></li>
+        <li><input type="checkbox"><span>I can explain why some files need a special utility to delete them.</span></li>
+        <li><input type="checkbox"><span>I can compare custom-written and off-the-shelf software, with an example of when to choose each.</span></li>
+      </ul>
+
+      <div class="final-score-box">
+        <div>Your final score</div>
+        <div class="big"><span id="finalScore">0</span> / 45</div>
+        <div id="finalMsg" style="margin-top:8px; font-size:.9rem;">Work through the questions above to build your score.</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+
+<script>
+  var state = { score: 0, attempted: new Set(), totalItems: 23 };
+
+  function updateProgress(){
+    var pct = Math.min(100, Math.round((state.attempted.size / state.totalItems) * 100));
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  function updateScore(){
+    document.getElementById('scoreDisplay').textContent = state.score;
+    document.getElementById('finalScore').textContent = state.score;
+    var msgEl = document.getElementById('finalMsg');
+    var max = 45;
+    if(state.score <= 0){
+      msgEl.textContent = 'Work through the questions above to build your score.';
+    } else if(state.score < max * 0.5){
+      msgEl.textContent = 'Good start — go back over any questions you weren\'t sure about.';
+    } else if(state.score < max * 0.85){
+      msgEl.textContent = 'Solid progress — a bit more revision and this will be locked in.';
+    } else {
+      msgEl.textContent = 'Excellent — you clearly know this topic well.';
+    }
+  }
+
+  function markAttempted(id){
+    if(!state.attempted.has(id)){
+      state.attempted.add(id);
+      updateProgress();
+    }
+  }
+
+  function checkAnswer(id){
+    var ta = document.getElementById('ans_' + id);
+    var val = ta.value.trim();
+    var err = document.getElementById('err_' + id);
+    var rev = document.getElementById('rev_' + id);
+    if(val.length < 3){
+      err.style.display = 'flex';
+      rev.style.display = 'none';
+      return;
+    }
+    err.style.display = 'none';
+    rev.style.display = 'block';
+    markAttempted(id);
+  }
+
+  function toggleTick(id, points){
+    var box = document.getElementById('tick_' + id);
+    if(box.checked){
+      state.score += points;
+    } else {
+      state.score -= points;
+    }
+    updateScore();
+  }
+
+  function answerMCQ(id, chosenEl, isCorrect, points){
+    var container = document.getElementById('mcq_' + id);
+    if(container.dataset.answered === '1') return;
+    container.dataset.answered = '1';
+
+    var options = container.querySelectorAll('.option');
+    options.forEach(function(opt){
+      opt.disabled = true;
+      if(opt.dataset.correct === 'true'){
+        opt.classList.add('correct');
+      }
+    });
+    if(!isCorrect){
+      chosenEl.classList.add('incorrect');
+    }
+
+    var fb = document.getElementById('fb_' + id);
+    fb.style.display = 'block';
+    if(isCorrect){
+      fb.style.color = '#15803d';
+      fb.textContent = 'Correct! +' + points + ' points.';
+      state.score += points;
+    } else {
+      fb.style.color = '#b91c1c';
+      fb.textContent = 'Not quite — the correct answer is now highlighted in green.';
+    }
+
+    markAttempted(id);
+    updateScore();
+  }
+
+  /* ---------------- Fragmentation simulator ---------------- */
+  var simStep = 0;
+  var simSelected = new Set();
+  var simChecked = false;
+  var correctMSet = [0,1,2,3,4,12,13,14];
+
+  var simStates = [
+    { sectors:['M','M','M','M','M','N','N','N','N',null,null,null,null,null,null,null],
+      caption:"Files M (5 sectors) and N (4 sectors) have just been saved. Each one sits in a single unbroken block — the read/write head barely has to move to read either file." },
+    { sectors:['M','M','M','M','M','N','N','N','N',null,null,null,'M','M','M',null],
+      caption:"File M needs 3 extra sectors, but the space right next to it (5–8) is already taken by N. The operating system has to use free space elsewhere instead — sectors 12–14." },
+    { sectors:['M','M','M','M','M','N','N','N','N',null,null,null,'M','M','M',null],
+      caption:"Click every sector you think now belongs to file M, then press Check." },
+    { sectors:['M','M','M','M','M','N','N','N','N','N','N',null,'M','M','M',null],
+      caption:"File N has also grown, by 2 sectors. The only free space nearby is sectors 9 and 10, so N is now fragmented too. Only sectors 11 and 15 remain free." },
+    { sectors:['M','M','M','M','M','M','M','M','N','N','N','N','N','N',null,null],
+      caption:"Defragmentation complete! Each file's data has been moved back into one contiguous block, so the read/write head won't need to jump around to read them." }
+  ];
+
+  function renderSimGrid(sectors){
+    var grid = document.getElementById('simGrid');
+    grid.innerHTML = '';
+    sectors.forEach(function(val, i){
+      var div = document.createElement('div');
+      div.className = 'sector ' + (val ? val : 'free');
+      div.id = 'sec-' + i;
+      div.textContent = val ? val : '';
+      if(simStep === 2 && !simChecked){
+        div.classList.add('clickable');
+        div.onclick = function(){ toggleSectorSelect(i); };
+        if(simSelected.has(i)) div.classList.add('selected');
+      }
+      grid.appendChild(div);
+    });
+  }
+
+  function toggleSectorSelect(i){
+    if(simSelected.has(i)) simSelected.delete(i);
+    else simSelected.add(i);
+    renderSimGrid(simStates[simStep].sectors);
+  }
+
+  function renderSimControls(){
+    var controls = document.getElementById('simControls');
+    controls.innerHTML = '';
+    var fb = document.getElementById('simFeedback');
+    fb.style.display = 'none';
+
+    if(simStep < 2){
+      var nextBtn = document.createElement('button');
+      nextBtn.className = 'sim-btn';
+      nextBtn.textContent = 'Next step';
+      nextBtn.onclick = function(){ simStep++; simChecked=false; renderSim(); };
+      controls.appendChild(nextBtn);
+    } else if(simStep === 2){
+      var checkBtn = document.createElement('button');
+      checkBtn.className = 'sim-btn';
+      checkBtn.textContent = 'Check my answer';
+      checkBtn.onclick = checkSimPrediction;
+      controls.appendChild(checkBtn);
+    } else if(simStep === 3){
+      var defragBtn = document.createElement('button');
+      defragBtn.className = 'sim-btn';
+      defragBtn.textContent = 'Run defragmentation';
+      defragBtn.onclick = function(){ simStep++; renderSim(); markAttempted('simfinal'); };
+      controls.appendChild(defragBtn);
+    }
+
+    if(simStep > 0){
+      var prevBtn = document.createElement('button');
+      prevBtn.className = 'sim-btn secondary';
+      prevBtn.textContent = 'Back';
+      prevBtn.onclick = function(){ simStep--; simChecked=false; renderSim(); };
+      controls.appendChild(prevBtn);
+    }
+  }
+
+  function checkSimPrediction(){
+    if(simSelected.size === 0){
+      var fb = document.getElementById('simFeedback');
+      fb.style.display='block';
+      fb.style.color = '#b91c1c';
+      fb.textContent = 'Select at least one sector before checking — have a real go first.';
+      return;
+    }
+    simChecked = true;
+    var correctSet = new Set(correctMSet);
+    var allCorrect = simSelected.size === correctSet.size;
+    simSelected.forEach(function(i){
+      var el = document.getElementById('sec-' + i);
+      if(correctSet.has(i)){ el.classList.add('sel-correct'); }
+      else { el.classList.add('sel-wrong'); allCorrect = false; }
+    });
+    correctSet.forEach(function(i){
+      if(!simSelected.has(i)){
+        document.getElementById('sec-' + i).classList.add('sel-wrong');
+        allCorrect = false;
+      }
+    });
+    var fb = document.getElementById('simFeedback');
+    fb.style.display = 'block';
+    if(allCorrect){
+      fb.style.color = '#15803d';
+      fb.textContent = 'Exactly right — that\'s all of file M\'s sectors, including the fragmented ones. +5 points.';
+      if(!state.attempted.has('simpredict')){ state.score += 5; }
+    } else {
+      fb.style.color = '#b91c1c';
+      fb.textContent = 'Not quite — the correctly highlighted sectors are shown in green, missed/incorrect ones in red.';
+    }
+    markAttempted('simpredict');
+    updateScore();
+    renderSimControls();
+  }
+
+  function renderSim(){
+    var s = simStates[simStep];
+    renderSimGrid(s.sectors);
+    document.getElementById('simCaption').textContent = s.caption;
+    renderSimControls();
+  }
+
+  /* ---------------- Sorting activity ---------------- */
+  var sortItems = [
+    { text:"Built specifically to match one organisation's exact requirements.", answer:"custom" },
+    { text:"Can be bought and start being used almost immediately.", answer:"shelf" },
+    { text:"The one client who ordered it covers the entire development cost, making it expensive.", answer:"custom" },
+    { text:"Cost is shared across every customer who buys a copy, so it's usually cheaper per user.", answer:"shelf" },
+    { text:"May include features the buyer will never actually use.", answer:"shelf" },
+    { text:"The client may have to wait a long time while it is designed, built and tested.", answer:"custom" },
+    { text:"There is a chance the finished software still doesn't do everything the buyer needs.", answer:"shelf" },
+    { text:"The client is closely involved in specifying exactly what the software must do.", answer:"custom" }
+  ];
+  var sortCorrectCount = 0;
+
+  function renderSortItems(){
+    var container = document.getElementById('sortContainer');
+    sortItems.forEach(function(item, idx){
+      var div = document.createElement('div');
+      div.className = 'sort-item';
+      div.innerHTML = '<p>' + item.text + '</p>' +
+        '<div class="sort-btns">' +
+        '<button class="sort-btn" id="sort-custom-' + idx + '" onclick="answerSort(' + idx + ', \'custom\')">Custom-written</button>' +
+        '<button class="sort-btn" id="sort-shelf-' + idx + '" onclick="answerSort(' + idx + ', \'shelf\')">Off-the-shelf</button>' +
+        '</div>' +
+        '<div class="sort-tag" id="sort-tag-' + idx + '"></div>';
+      container.appendChild(div);
+    });
+  }
+
+  function answerSort(idx, chosen){
+    var custBtn = document.getElementById('sort-custom-' + idx);
+    var shelfBtn = document.getElementById('sort-shelf-' + idx);
+    if(custBtn.disabled) return;
+    custBtn.disabled = true;
+    shelfBtn.disabled = true;
+    var correctAns = sortItems[idx].answer;
+    var tag = document.getElementById('sort-tag-' + idx);
+    tag.style.display = 'block';
+    if(chosen === correctAns){
+      (chosen === 'custom' ? custBtn : shelfBtn).classList.add('correct');
+      tag.style.color = '#15803d';
+      tag.textContent = 'Correct! +1 point.';
+      state.score += 1;
+      sortCorrectCount++;
+    } else {
+      (chosen === 'custom' ? custBtn : shelfBtn).classList.add('incorrect');
+      (correctAns === 'custom' ? custBtn : shelfBtn).classList.add('correct');
+      tag.style.color = '#b91c1c';
+      tag.textContent = 'Not quite — correct answer highlighted in green.';
+    }
+    document.getElementById('sortFeedback').textContent = sortCorrectCount + ' / 8 sorted correctly';
+    markAttempted('sort' + idx);
+    updateScore();
+  }
+
+  renderSortItems();
+  renderSim();
+  updateScore();
+  updateProgress();
+</script>
+
+</body>
+</html>
